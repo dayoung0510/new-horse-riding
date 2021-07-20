@@ -6,8 +6,14 @@ export type UserType = {
   name: string;
   assets: number;
 };
+export type BettingType = {
+  bettingPerson: string;
+  bettingHorse: number;
+  bettingMoney: number;
+};
 export type GameStateType = {
   users: UserType[];
+  bettings: BettingType[];
   speedDistribution: number[];
   isOngoing: boolean;
   second: number;
@@ -18,6 +24,23 @@ const initialState: GameStateType = {
     { id: 0, name: '김라마', assets: 100000 },
     { id: 1, name: '박낙타', assets: 100000 },
     { id: 2, name: '알파카', assets: 100000 },
+  ],
+  bettings: [
+    {
+      bettingPerson: '',
+      bettingHorse: 0,
+      bettingMoney: 0,
+    },
+    {
+      bettingPerson: '',
+      bettingHorse: 0,
+      bettingMoney: 0,
+    },
+    {
+      bettingPerson: '',
+      bettingHorse: 0,
+      bettingMoney: 0,
+    },
   ],
   speedDistribution: [],
   isOngoing: false,
@@ -38,17 +61,18 @@ type ActionType =
     }
   | {
       type: 'START';
-      id: number;
-      name: string;
-      assets: number;
     }
   | {
       type: 'COUNT';
-      second: number;
     }
   | {
       type: 'FINISH';
-      isOngoing: boolean;
+    }
+  | {
+      type: 'BETTING';
+      name: string;
+      value: number;
+      idx: number;
     };
 
 const reducer = (state: GameStateType, action: ActionType) => {
@@ -86,6 +110,15 @@ const reducer = (state: GameStateType, action: ActionType) => {
 
     case 'FINISH':
       return { ...state, isOngoing: false };
+
+    case 'BETTING':
+      const { name, value, idx } = action;
+
+      return [
+        ...state.bettings.slice(0, idx),
+        { ...state[idx], bettingPerson: name, [name]: value },
+        ...state.bettings.slice(idx + 1),
+      ];
   }
 };
 
