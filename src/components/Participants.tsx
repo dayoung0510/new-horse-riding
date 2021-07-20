@@ -1,7 +1,7 @@
-import React, { useCallback, ChangeEvent } from 'react';
-import { Title, Div, Line, Btn } from 'components/styles';
-import { useGameContext } from 'App/gameContext';
-import { horses } from 'App/datas';
+import React, { useCallback, ChangeEvent } from "react";
+import { Title, Div, Line, Btn } from "components/styles";
+import { useGameContext } from "App/gameContext";
+import { horses } from "App/datas";
 
 const Participant: React.FC = () => {
   const {
@@ -14,12 +14,11 @@ const Participant: React.FC = () => {
       (e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
-        dispatch({ type: 'BETTING', name, value, idx });
+        dispatch({ type: "BETTING", name, value, idx });
       },
     [dispatch]
   );
 
-  console.log(bettings);
   return (
     <>
       <Div>
@@ -28,8 +27,8 @@ const Participant: React.FC = () => {
           return (
             <Line key={idx}>
               {user.name}
-              <select onChange={handleChange(idx)} name='bettingHorse'>
-                <option value=''>말을 선택하세요</option>
+              <select onChange={handleChange(idx)} name="bettingHorse">
+                <option value="">말을 선택하세요</option>
                 {horses.map((horse) => {
                   return (
                     <option key={horse.id} value={horse.id}>
@@ -39,9 +38,9 @@ const Participant: React.FC = () => {
                 })}
               </select>
               <input
-                name='bettingMoney'
+                name="bettingMoney"
                 onChange={handleChange(idx)}
-                placeholder='금액을 입력하세요'
+                placeholder="금액을 입력하세요"
                 required
               />
             </Line>
@@ -49,7 +48,7 @@ const Participant: React.FC = () => {
         })}
         <Btn
           onClick={() => {
-            dispatch({ type: 'START' });
+            dispatch({ type: "START" });
           }}
         >
           시작

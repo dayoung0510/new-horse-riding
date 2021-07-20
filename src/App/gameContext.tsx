@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useReducer } from 'react';
-import { horses } from 'App/datas';
+import React, { createContext, useContext, useReducer } from "react";
+import { horses } from "App/datas";
 
 export type UserType = {
   id: number;
@@ -21,23 +21,23 @@ export type GameStateType = {
 
 const initialState: GameStateType = {
   users: [
-    { id: 0, name: '김라마', assets: 100000 },
-    { id: 1, name: '박낙타', assets: 100000 },
-    { id: 2, name: '알파카', assets: 100000 },
+    { id: 0, name: "김라마", assets: 100000 },
+    { id: 1, name: "박낙타", assets: 100000 },
+    { id: 2, name: "알파카", assets: 100000 },
   ],
   bettings: [
     {
-      bettingPerson: '',
+      bettingPerson: "",
       bettingHorse: 0,
       bettingMoney: 0,
     },
     {
-      bettingPerson: '',
+      bettingPerson: "",
       bettingHorse: 0,
       bettingMoney: 0,
     },
     {
-      bettingPerson: '',
+      bettingPerson: "",
       bettingHorse: 0,
       bettingMoney: 0,
     },
@@ -56,20 +56,20 @@ export const useGameContext = () => useContext(GameContext);
 
 type ActionType =
   | {
-      type: 'INITIALIZE';
+      type: "INITIALIZE";
       users: UserType[];
     }
   | {
-      type: 'START';
+      type: "START";
     }
   | {
-      type: 'COUNT';
+      type: "COUNT";
     }
   | {
-      type: 'FINISH';
+      type: "FINISH";
     }
   | {
-      type: 'BETTING';
+      type: "BETTING";
       name: string;
       value: number;
       idx: number;
@@ -79,13 +79,13 @@ const reducer = (state: GameStateType, action: ActionType) => {
   const { second } = state;
 
   switch (action.type) {
-    case 'INITIALIZE':
+    case "INITIALIZE":
       return {
         ...state,
         users: action.users || [],
       };
 
-    case 'START':
+    case "START":
       state.second = 0;
       //시작 상태로 바꿔줌
       state.isOngoing = true;
@@ -105,21 +105,20 @@ const reducer = (state: GameStateType, action: ActionType) => {
         speedDistribution: arr,
       };
 
-    case 'COUNT':
+    case "COUNT":
       return { ...state, second: second + 1 };
 
-    case 'FINISH':
+    case "FINISH":
       return { ...state, isOngoing: false };
 
-    case 'BETTING':
+    case "BETTING":
       const { name, value, idx } = action;
-      console.log(name, value);
       return {
         ...state,
         bettings: [
           ...state.bettings.slice(0, idx),
           {
-            ...state[idx],
+            ...state.bettings[idx],
             bettingPerson: state.users[idx].name,
             [name]: value,
           },
