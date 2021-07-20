@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
-import { GroundDiv, GoalLine, HorseLine, HorseGrid } from 'components/styles';
-import Horse from 'components/Horse';
-import { useGameContext } from 'App/gameContext';
-import { horses, speeds } from 'App/datas';
+import React, { useEffect } from "react";
+import { GroundDiv, GoalLine, HorseLine, HorseGrid } from "components/styles";
+import Horse from "components/Horse";
+import { useGameContext } from "App/gameContext";
+import { horses, speeds } from "App/datas";
 
 const Ground: React.FC = () => {
   const {
-    state: { second, isOngoing, speedDistribution },
+    state: { second, isOngoing, speedDistribution, winnerHorse },
     dispatch,
   } = useGameContext();
 
@@ -15,9 +15,9 @@ const Ground: React.FC = () => {
       const Count = setInterval(() => {
         if (isOngoing === true && second < speeds[0].length - 1) {
           clearInterval(Count);
-          return dispatch({ type: 'COUNT' });
+          return dispatch({ type: "COUNT" });
         }
-        dispatch({ type: 'FINISH' });
+        dispatch({ type: "FINISH" });
       }, 300);
       return () => {
         clearInterval(Count);

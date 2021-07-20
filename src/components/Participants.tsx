@@ -5,7 +5,7 @@ import { horses } from "App/datas";
 
 const Participant: React.FC = () => {
   const {
-    state: { users, bettings },
+    state: { users },
     dispatch,
   } = useGameContext();
 
@@ -13,7 +13,6 @@ const Participant: React.FC = () => {
     (idx: number) =>
       (e: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-
         dispatch({ type: "BETTING", name, value, idx });
       },
     [dispatch]

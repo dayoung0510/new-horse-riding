@@ -17,6 +17,7 @@ export type GameStateType = {
   speedDistribution: number[];
   isOngoing: boolean;
   second: number;
+  winnerHorse: number;
 };
 
 const initialState: GameStateType = {
@@ -45,6 +46,7 @@ const initialState: GameStateType = {
   speedDistribution: [],
   isOngoing: false,
   second: 0,
+  winnerHorse: -1,
 };
 
 const GameContext = createContext<{
@@ -87,7 +89,6 @@ const reducer = (state: GameStateType, action: ActionType) => {
 
     case "START":
       state.second = 0;
-      //시작 상태로 바꿔줌
       state.isOngoing = true;
 
       //말 달리기 셔플
@@ -109,7 +110,11 @@ const reducer = (state: GameStateType, action: ActionType) => {
       return { ...state, second: second + 1 };
 
     case "FINISH":
-      return { ...state, isOngoing: false };
+      return {
+        ...state,
+        isOngoing: false,
+        winnerHorse: state.speedDistribution.indexOf(0),
+      };
 
     case "BETTING":
       const { name, value, idx } = action;
