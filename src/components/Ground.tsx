@@ -1,35 +1,19 @@
 import React, { useEffect } from 'react';
-import styled from 'styled-components';
 import { GroundDiv, GoalLine, HorseLine, HorseGrid } from 'components/styles';
+import Horse from 'components/Horse';
 import { useGameContext } from 'App/gameContext';
 import { horses, speeds } from 'App/datas';
 
-const Horse = styled.div`
-  width: 5rem;
-  height: 5rem;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: black;
-  position: absolute;
-  bottom: 0;
-  background-color: ${(props) => props.color};
-`;
-
 const Ground: React.FC = () => {
   const {
-    state: { second, isOngoing },
+    state: { second, isOngoing, speedDistribution },
     dispatch,
   } = useGameContext();
-
-  console.log('isOngoing :', isOngoing);
 
   useEffect(() => {
     if (isOngoing) {
       const Count = setInterval(() => {
         if (isOngoing === true && second < speeds[0].length - 1) {
-          console.log(second);
           clearInterval(Count);
           return dispatch({ type: 'COUNT' });
         }
@@ -47,9 +31,10 @@ const Ground: React.FC = () => {
         <GoalLine>GOAL</GoalLine>
         <HorseLine>
           {horses.map((horse) => {
+            const speedArrIdx = speedDistribution[horse.id];
             return (
               <HorseGrid key={horse.id}>
-                <Horse color={horse.color}>{horse.name}</Horse>
+                <Horse bg={horse.color} name={horse.name} speed={speedArrIdx} />
               </HorseGrid>
             );
           })}

@@ -62,6 +62,7 @@ const reducer = (state: GameStateType, action: ActionType) => {
       };
 
     case 'START':
+      state.second = 0;
       //시작 상태로 바꿔줌
       state.isOngoing = true;
 
