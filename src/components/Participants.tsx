@@ -5,7 +5,7 @@ import { horses } from 'App/datas';
 
 const Participant: React.FC = () => {
   const {
-    state: { users },
+    state: { users, bettings },
     dispatch,
   } = useGameContext();
 
@@ -19,6 +19,7 @@ const Participant: React.FC = () => {
     [dispatch]
   );
 
+  console.log(bettings);
   return (
     <>
       <Div>

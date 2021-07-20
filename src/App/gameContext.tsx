@@ -113,12 +113,19 @@ const reducer = (state: GameStateType, action: ActionType) => {
 
     case 'BETTING':
       const { name, value, idx } = action;
-
-      return [
-        ...state.bettings.slice(0, idx),
-        { ...state[idx], bettingPerson: name, [name]: value },
-        ...state.bettings.slice(idx + 1),
-      ];
+      console.log(name, value);
+      return {
+        ...state,
+        bettings: [
+          ...state.bettings.slice(0, idx),
+          {
+            ...state[idx],
+            bettingPerson: state.users[idx].name,
+            [name]: value,
+          },
+          ...state.bettings.slice(idx + 1),
+        ],
+      };
   }
 };
 
