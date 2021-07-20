@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { GroundDiv, GoalLine, HorseLine, HorseGrid } from 'components/styles';
-import { horses } from 'App/datas';
+import { useGameContext } from 'App/gameContext';
+import { horses, speeds } from 'App/datas';
 
 const Horse = styled.div`
   width: 5rem;
@@ -17,6 +18,29 @@ const Horse = styled.div`
 `;
 
 const Ground: React.FC = () => {
+  const {
+    state: { second, isOngoing },
+    dispatch,
+  } = useGameContext();
+
+  console.log('isOngoing :', isOngoing);
+
+  useEffect(() => {
+    if (isOngoing) {
+      const Count = setInterval(() => {
+        if (isOngoing === true && second < speeds[0].length - 1) {
+          console.log(second);
+          clearInterval(Count);
+          return dispatch({ type: 'COUNT' });
+        }
+        dispatch({ type: 'FINISH' });
+      }, 300);
+      return () => {
+        clearInterval(Count);
+      };
+    }
+  });
+
   return (
     <>
       <GroundDiv>

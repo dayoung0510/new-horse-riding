@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { useGameContext } from 'App/gameContext';
 import Participants from 'components/Participants';
 import Assets from 'components/Assets';
 import Ground from 'components/Ground';

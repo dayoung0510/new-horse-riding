@@ -5,7 +5,7 @@ import { horses } from 'App/datas';
 
 const Participant: React.FC = () => {
   const {
-    state: { users, speedDistribution },
+    state: { users },
     dispatch,
   } = useGameContext();
 
@@ -33,7 +33,6 @@ const Participant: React.FC = () => {
         })}
         <Btn
           onClick={() => {
-            console.log(speedDistribution);
             dispatch({ type: 'START' });
           }}
         >

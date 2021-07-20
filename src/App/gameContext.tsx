@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { speeds, horses } from 'App/datas';
+import { horses } from 'App/datas';
 
 export type UserType = {
   id: number;
@@ -9,6 +9,8 @@ export type UserType = {
 export type GameStateType = {
   users: UserType[];
   speedDistribution: number[];
+  isOngoing: boolean;
+  second: number;
 };
 
 const initialState: GameStateType = {
@@ -18,6 +20,8 @@ const initialState: GameStateType = {
     { id: 2, name: '알파카', assets: 100000 },
   ],
   speedDistribution: [],
+  isOngoing: false,
+  second: 0,
 };
 
 const GameContext = createContext<{
@@ -37,10 +41,18 @@ type ActionType =
       id: number;
       name: string;
       assets: number;
+    }
+  | {
+      type: 'COUNT';
+      second: number;
+    }
+  | {
+      type: 'FINISH';
+      isOngoing: boolean;
     };
 
 const reducer = (state: GameStateType, action: ActionType) => {
-  const { users } = state;
+  const { second } = state;
 
   switch (action.type) {
     case 'INITIALIZE':
@@ -50,6 +62,9 @@ const reducer = (state: GameStateType, action: ActionType) => {
       };
 
     case 'START':
+      //시작 상태로 바꿔줌
+      state.isOngoing = true;
+
       //말 달리기 셔플
       const arr = horses.map((horse) => {
         return horse.id;
@@ -64,6 +79,12 @@ const reducer = (state: GameStateType, action: ActionType) => {
         ...state,
         speedDistribution: arr,
       };
+
+    case 'COUNT':
+      return { ...state, second: second + 1 };
+
+    case 'FINISH':
+      return { ...state, isOngoing: false };
   }
 };
 
