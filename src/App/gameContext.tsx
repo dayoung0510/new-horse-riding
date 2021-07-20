@@ -58,10 +58,6 @@ export const useGameContext = () => useContext(GameContext);
 
 type ActionType =
   | {
-      type: "INITIALIZE";
-      users: UserType[];
-    }
-  | {
       type: "START";
     }
   | {
@@ -81,17 +77,10 @@ const reducer = (state: GameStateType, action: ActionType) => {
   const { second } = state;
 
   switch (action.type) {
-    case "INITIALIZE":
-      return {
-        ...state,
-        users: action.users || [],
-      };
-
     case "START":
       state.second = 0;
       state.isOngoing = true;
 
-      //말 달리기 셔플
       const arr = horses.map((horse) => {
         return horse.id;
       });
