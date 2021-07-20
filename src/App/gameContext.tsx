@@ -1,24 +1,27 @@
 import React, { createContext, useContext, useReducer } from 'react';
+import { speeds, horses } from 'App/datas';
 
 export type UserType = {
   id: number;
   name: string;
   assets: number;
 };
-export type UserStateType = {
+export type GameStateType = {
   users: UserType[];
+  speedDistribution: number[];
 };
 
-const initialState: UserStateType = {
+const initialState: GameStateType = {
   users: [
     { id: 0, name: '김라마', assets: 100000 },
     { id: 1, name: '박낙타', assets: 100000 },
     { id: 2, name: '알파카', assets: 100000 },
   ],
+  speedDistribution: [],
 };
 
 const GameContext = createContext<{
-  state: UserStateType;
+  state: GameStateType;
   dispatch: React.Dispatch<any>;
 }>({ state: initialState, dispatch: () => {} });
 
@@ -30,13 +33,13 @@ type ActionType =
       users: UserType[];
     }
   | {
-      type: 'CREATE';
+      type: 'START';
       id: number;
       name: string;
       assets: number;
     };
 
-const reducer = (state: UserStateType, action: ActionType) => {
+const reducer = (state: GameStateType, action: ActionType) => {
   const { users } = state;
 
   switch (action.type) {
@@ -45,11 +48,21 @@ const reducer = (state: UserStateType, action: ActionType) => {
         ...state,
         users: action.users || [],
       };
-    case 'CREATE':
-      console.log('create!!!');
+
+    case 'START':
+      //말 달리기 셔플
+      const arr = horses.map((horse) => {
+        return horse.id;
+      });
+      let currentIdx = arr.length;
+      while (currentIdx !== 0) {
+        const randomIdx = Math.floor(Math.random() * currentIdx);
+        currentIdx -= 1;
+        [arr[currentIdx], arr[randomIdx]] = [arr[randomIdx], arr[currentIdx]];
+      }
       return {
         ...state,
-        users: users,
+        speedDistribution: arr,
       };
   }
 };
