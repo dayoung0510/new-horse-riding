@@ -71,6 +71,9 @@ type ActionType =
       name: string;
       value: number;
       idx: number;
+    }
+  | {
+      type: "WALLET";
     };
 
 const reducer = (state: GameStateType, action: ActionType) => {
@@ -119,6 +122,19 @@ const reducer = (state: GameStateType, action: ActionType) => {
           ...state.bettings.slice(idx + 1),
         ],
       };
+
+    case "WALLET":
+      state.bettings.map((bet, idx) => {
+        if (Number(bet.bettingHorse) === state.winnerHorse) {
+          console.log("win", bet.bettingMoney);
+          state.users[idx].assets += Number(bet.bettingMoney);
+        } else {
+          console.log("loose", bet.bettingMoney);
+          state.users[idx].assets -= Number(bet.bettingMoney);
+          console.log("재산: ", state.users[idx].assets);
+        }
+      });
+      return { ...state };
   }
 };
 

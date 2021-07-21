@@ -1,29 +1,13 @@
-import React, { useEffect } from 'react';
-import { Title, Div, Line, Btn, GreenTxt, RedTxt } from 'components/styles';
-import { useGameContext } from 'App/gameContext';
+import React, { useEffect } from "react";
+import { Title, Div, Line, GreenTxt, RedTxt } from "components/styles";
+import { useGameContext } from "App/gameContext";
 
 const defaultMoney = 100000;
 
 const Assets: React.FC = () => {
   const {
-    state: { users, winnerHorse, bettings, isOngoing },
+    state: { users },
   } = useGameContext();
-
-  useEffect(() => {
-    bettings.map((bet, idx) => {
-      const BeforeMoney = users[idx].assets;
-      const WinnerMoney = BeforeMoney + Number(bet.bettingMoney);
-      const LooserMoney = BeforeMoney - Number(bet.bettingMoney);
-
-      if (Number(bet.bettingHorse) === winnerHorse) {
-        users[idx].assets = WinnerMoney;
-      } else {
-        users[idx].assets = LooserMoney;
-      }
-    });
-  }, [winnerHorse]);
-
-  console.log('우승마 : ', winnerHorse);
 
   return (
     <Div>
@@ -33,7 +17,7 @@ const Assets: React.FC = () => {
         const difference = defaultMoney - user.assets;
         return (
           <Line key={user.id}>
-            {user.name} {user.assets.toLocaleString('ko-KR')}원 (
+            {user.name} {user.assets.toLocaleString("ko-KR")}원 (
             {difference <= 0 ? (
               <GreenTxt>+{Math.abs(difference)}원</GreenTxt>
             ) : (

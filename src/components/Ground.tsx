@@ -18,6 +18,7 @@ const Ground: React.FC = () => {
           return dispatch({ type: "COUNT" });
         }
         dispatch({ type: "FINISH" });
+        dispatch({ type: "WALLET" });
       }, 300);
       return () => {
         clearInterval(Count);
