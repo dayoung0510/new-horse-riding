@@ -6,13 +6,12 @@ const defaultMoney = 100000;
 
 const Assets: React.FC = () => {
   const {
-    state: { users },
+    state: { users, winnerHorse },
   } = useGameContext();
 
   return (
     <Div>
       <Title>내 지갑</Title>
-
       {users.map((user) => {
         const difference = defaultMoney - user.assets;
         return (
@@ -33,4 +32,4 @@ const Assets: React.FC = () => {
   );
 };
 
-export default Assets;
+export default React.memo(Assets);

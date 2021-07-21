@@ -131,7 +131,7 @@ const reducer = (state: GameStateType, action: ActionType) => {
         } else {
           console.log("loose", bet.bettingMoney);
           state.users[idx].assets -= Number(bet.bettingMoney);
-          console.log("재산: ", state.users[idx].assets);
+          console.log("재산:", state.users[idx].assets);
         }
       });
       return { ...state };
