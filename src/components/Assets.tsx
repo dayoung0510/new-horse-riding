@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Title, Div, Line, GreenTxt, RedTxt } from "components/styles";
 import { useGameContext } from "App/gameContext";
 
@@ -6,7 +6,7 @@ const defaultMoney = 100000;
 
 const Assets: React.FC = () => {
   const {
-    state: { users, winnerHorse },
+    state: { users },
   } = useGameContext();
 
   return (

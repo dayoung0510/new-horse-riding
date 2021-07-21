@@ -6,7 +6,7 @@ import { horses, speeds } from "App/datas";
 
 const Ground: React.FC = () => {
   const {
-    state: { second, isOngoing, speedDistribution, winnerHorse },
+    state: { second, isOngoing, speedDistribution },
     dispatch,
   } = useGameContext();
 
