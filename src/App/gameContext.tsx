@@ -1,11 +1,13 @@
 import React, { createContext, useContext, useReducer } from "react";
 import { horses } from "App/datas";
+import { clearInterval } from "timers";
 
 export type UserType = {
   id: number;
   name: string;
   assets: number;
 };
+export type AfterGameType = { id: number; money: number };
 export type BettingType = {
   bettingPerson: string;
   bettingHorse: number;
@@ -18,6 +20,7 @@ export type GameStateType = {
   isOngoing: boolean;
   second: number;
   winnerHorse: number;
+  afterGame: AfterGameType[];
 };
 
 const initialState: GameStateType = {
@@ -47,6 +50,11 @@ const initialState: GameStateType = {
   isOngoing: false,
   second: 0,
   winnerHorse: -1,
+  afterGame: [
+    { id: 0, money: 0 },
+    { id: 1, money: 0 },
+    { id: 2, money: 0 },
+  ],
 };
 
 const GameContext = createContext<{
@@ -74,6 +82,9 @@ type ActionType =
     }
   | {
       type: "WALLET";
+    }
+  | {
+      type: "INSTANT";
     };
 
 const reducer = (state: GameStateType, action: ActionType) => {
@@ -132,6 +143,14 @@ const reducer = (state: GameStateType, action: ActionType) => {
         }
       });
       return { ...state };
+
+    case "INSTANT":
+      console.log("!", state.bettings);
+      state.bettings.map((b, idx) => {
+        state.afterGame[idx].money = b.bettingMoney;
+      });
+      console.log(state.afterGame);
+      return { ...state, ...state.bettings };
   }
 };
 
